@@ -137,10 +137,10 @@ st.session_state.student_order = student_order
 if not "group" in st.session_state:
 
 	zeroCounter = 0
-	while os.path.exists('0_' + str(zeroCounter)+'.csv'):
+	while os.path.exists('study_data/0_' + str(zeroCounter)+'.csv'):
 		zeroCounter = zeroCounter + 1
 	oneCounter = 0
-	while os.path.exists('1_' + str(oneCounter)+'.csv'):
+	while os.path.exists('study_data/1_' + str(oneCounter)+'.csv'):
 		oneCounter = oneCounter + 1
 	if oneCounter > zeroCounter:
 		st.session_state.group = 0	
@@ -204,19 +204,39 @@ If you want to proceed with the study, please click "Start"!
 """
 )
 
+q1 = st.text_input('Please enter your Prolific Id:')
+
 next_page = st.button("Start", key = 1)
 if next_page:
-	id = 0
-	while os.path.exists(str(st.session_state.group) + '_' + str(id)+'.csv'):
-		id = id + 1
-	filename = str(st.session_state.group) + '_' + str(id) + '.csv'
-	st.session_state.filename = filename
-	with open(filename, 'a+') as f:
-		f.write(f"Filename,{filename}\n")
-	if st.session_state.group == 0:
-		switch_page("vis-xai")
+	
+	if(q1 == ""):
+		st.error("Please enter your Prolific ID to start")
 	else:
-		switch_page("lang-xai")
+		#id = 0
+		#while os.path.exists(str(st.session_state.group) + '_' + str(id)+'.csv'):
+		#	id = id + 1
+		filename = 'study_data/' + str(st.session_state.group) + '_' + q1 + '.csv'
+		st.session_state.filename = filename
+		with open(filename, 'a+') as f:
+			f.write(f"Prolific ID,{q1}\n")
+		if st.session_state.group == 0:
+			switch_page("vis-xai")
+		else:
+			switch_page("lang-xai")
+
+# next_page = st.button("Start", key = 1)
+# if next_page:
+# 	id = 0
+# 	while os.path.exists(str(st.session_state.group) + '_' + str(id)+'.csv'):
+# 		id = id + 1
+# 	filename = str(st.session_state.group) + '_' + str(id) + '.csv'
+# 	st.session_state.filename = filename
+# 	with open(filename, 'a+') as f:
+# 		f.write(f"Filename,{filename}\n")
+# 	if st.session_state.group == 0:
+# 		switch_page("vis-xai")
+# 	else:
+# 		switch_page("lang-xai")
 
 footer="""<style>
 a:link , a:visited{

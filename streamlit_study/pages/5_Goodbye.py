@@ -80,6 +80,12 @@ st.write(f"You predicted {num_correct} of the 15 student outcomes correctly.")
 
 st.write("---")
 
+st.write('The completion code for Prolific is')
+st.write("# C13E0WG5")
+st.write('Please enter it on prolific to finish the study and receive your compensation.')
+
+#webbrowser.open('https://app.prolific.co/submissions/complete?cc=C13E0WG5')
+
 st.balloons()
 
 footer="""<style>
