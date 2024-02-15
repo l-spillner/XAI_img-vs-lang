@@ -81,19 +81,29 @@ with open(dataxai_path) as file:
     AI_predictions = json.load(file)
 st.session_state.AI_predictions = AI_predictions
 
+# tutorial student
+
+student_id_tutorial = 2309 	# all courses examined and passed
+							# good grades
+							# male
+st.session_state.comprehension = True
+
 # randomly select ten of the students 
 
 students = list(AI_predictions.keys())
-students = [int(s) for s in students]
-df = df.loc[students]
-student_order = list(df.index)
-student_order = random.sample(student_order, 10)
+students = [int(s) for s in students if not int(s) == student_id_tutorial]
+students_plus_tutorial = students+[student_id_tutorial]
+df = df.loc[students_plus_tutorial]
+student_order = random.sample(students, 10)
 random.shuffle(student_order)
 #df["Order"] = student_order
 #df.set_index('Order',inplace=True)
 st.session_state.data = df
 st.session_state.student_order = student_order
+st.session_state.student_id_tutorial = student_id_tutorial
+st.session_state.tutorial_done = False
 
+#df["ai_prop"] = [AI_predictions[str(s)]['grad_prob'] for s in df.index]
 #st.write(df)
 
 # # Randomly shuffle data
@@ -226,10 +236,11 @@ if next_page:
 		with open(filename, 'a+') as f:
 			f.write(f"Prolific ID,{q1}\n")
 			f.write(f"student_id,target,first_choice,ai_pred,second_choice,time1,time2,time3\n")
-		if st.session_state.group == 0:
-			switch_page("vis-xai")
-		else:
-			switch_page("lang-xai")
+		switch_page("tutorial")
+		# if st.session_state.group == 0:
+		# 	switch_page("vis-xai")
+		# else:
+		# 	switch_page("lang-xai")
 
 # next_page = st.button("Start", key = 1)
 # if next_page:
