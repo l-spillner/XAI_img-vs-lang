@@ -136,13 +136,19 @@ st.session_state.student_order = student_order
 
 if not "group" in st.session_state:
 
-	zeroCounter = 0
-	while os.path.exists('study_data/0_' + str(zeroCounter)+'.csv'):
-		zeroCounter = zeroCounter + 1
-	oneCounter = 0
-	while os.path.exists('study_data/1_' + str(oneCounter)+'.csv'):
-		oneCounter = oneCounter + 1
-	if oneCounter > zeroCounter:
+	dirs = os.listdir('study_data')
+	dirs = [(d.startswith('1_')) for d in dirs]
+
+	# zeroCounter = 0
+	# while os.path.exists('study_data/0_' + str(zeroCounter)+'.csv'):
+	# 	zeroCounter = zeroCounter + 1
+	# oneCounter = 0
+	# while os.path.exists('study_data/1_' + str(oneCounter)+'.csv'):
+	# 	oneCounter = oneCounter + 1
+
+	# st.write(zeroCounter, oneCounter)
+
+	if sum(dirs) >= (len(dirs)-sum(dirs)): # sum is num group 1, len is num all, len-sum is num group 0
 		st.session_state.group = 0	
 	else:
 		st.session_state.group = 1
@@ -219,6 +225,7 @@ if next_page:
 		st.session_state.filename = filename
 		with open(filename, 'a+') as f:
 			f.write(f"Prolific ID,{q1}\n")
+			f.write(f"student_id,target,first_choice,ai_pred,second_choice,time1,time2,time3\n")
 		if st.session_state.group == 0:
 			switch_page("vis-xai")
 		else:

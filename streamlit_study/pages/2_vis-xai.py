@@ -125,7 +125,7 @@ def final_decision_submit(student_number):
 	time2 = st.session_state["time_second"]
 	time3 = str(time.time())
 	with open(filename, 'a+') as f:
-		f.write(f"{student_id},{correct_choice},{ai_pred},{first_choice},{second_choice},{time1},{time2},{time3}\n")
+		f.write(f"{student_id},{correct_choice},{first_choice},{ai_pred},{second_choice},{time1},{time2},{time3}\n")
 	st.session_state["state_num"] = 1
 	st.session_state["student_num"] += 1
 
