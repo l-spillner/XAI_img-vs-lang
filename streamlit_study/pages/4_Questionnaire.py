@@ -127,7 +127,7 @@ with st.form(key='my_form'):
     q3b = st.text_input('If yes, how have you come in contact with AI?')
     #else:
     #    q4b = None
-    q4 = st.number_input('Out of the 15 students, how many do you think you predicted correctly (with the help of the AI)?', value = int(0))
+    q4 = st.number_input('Out of the 11 students, how many do you think you predicted correctly (with the help of the AI)?', value = int(0))
     #q4 = st.radio("What gender do you identify as?", ["", "FEMALE", "MALE", "PREFER TO SELF-IDENTIFY"])
 
     st.write("Please rate the following statements:")
@@ -146,6 +146,7 @@ with st.form(key='my_form'):
         "fai_3": "If I am not sure about a decision, I have faith that the system will provide the best solution",
         "fai_4": "When the system gives unusual advice I am confident that the advice is correct",
         "fai_5": "Even if I have no reason to expect the system will be able to solve a difficult problem, I still feel certain that it will",
+        "att_1": "Answer \"AGREE\" to this question"
     }
 
     likert_results = {}
@@ -191,8 +192,15 @@ if submit_button:
             f.write(f"{4},{q4}\n")
             #f.write(f"{4},{q4}\n")
             for key in likert_question_keys:
-                f.write(f"{key},{likert_results[key]}\n")
-        switch_page("Goodbye")
+                if(key != "att_1"):
+                    if(likert_results[key] != "AGREE"):
+                        st.session_state.attention_num = st.session_state.attention_num + 1
+                else:
+                    f.write(f"{key},{likert_results[key]}\n")
+        if(st.session_state.attention_num >= 2):
+            switch_page("GoodbyeAtt")
+        else:
+            switch_page("Goodbye")
 
 footer="""<style>
 a:link , a:visited{

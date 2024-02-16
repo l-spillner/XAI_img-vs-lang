@@ -65,6 +65,8 @@ student_num = 0
 st.session_state.student_num = student_num
 st.session_state.state_num = 1
 
+st.session_state.attention_num = 0
+
 # read data
 
 # dataset (without target value)
