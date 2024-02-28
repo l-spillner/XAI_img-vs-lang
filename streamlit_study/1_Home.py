@@ -98,6 +98,8 @@ students_plus_tutorial = students+[student_id_tutorial]
 df = df.loc[students_plus_tutorial]
 student_order = random.sample(students, 10)
 random.shuffle(student_order)
+student_order = student_order[:6] + [student_id_tutorial] + student_order[6:]
+#st.write(student_order)
 #df["Order"] = student_order
 #df.set_index('Order',inplace=True)
 st.session_state.data = df
@@ -199,7 +201,7 @@ This is a research study on the usefulness of Artificial Intelligence (AI) decis
 
 Students dropping out before finishing their degree impacts economic growth, employment, competiveness as well as students' lives and families as well as educational institutions. Tutors and advisors can use student data to make predictions about their academic career to offer more accurate help to students.
 
-Your task will be to have a look at 10 randomly selected sets of student data, and predict if the student will graduate or drop out.
+Your task will be to have a look at 12 randomly selected sets of student data, and predict if the student will graduate or drop out.
 Our AI tool trained specifically for this task will make a recommendation to assist you with your decision. Finally, we will ask you to answer a few questions about how useful the AI tool was in making your decisions.""")
 
 

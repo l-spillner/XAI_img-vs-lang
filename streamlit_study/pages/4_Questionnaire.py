@@ -192,7 +192,7 @@ if submit_button:
             f.write(f"{4},{q4}\n")
             #f.write(f"{4},{q4}\n")
             for key in likert_question_keys:
-                if(key != "att_1"):
+                if(key == "att_1"):
                     if(likert_results[key] != "AGREE"):
                         st.session_state.attention_num = st.session_state.attention_num + 1
                 else:

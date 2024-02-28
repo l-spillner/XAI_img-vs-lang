@@ -116,19 +116,33 @@ def final_decision_submit(student_number):
 	second_choice = choice_2
 	correct_choice = AI_predictions[str(student_id)]["target"]
 	ai_pred = AI_predictions[str(student_id)]["prediction"]
-	if second_choice == correct_choice:
-		if not "num_correct" in st.session_state:
-			st.session_state["num_correct"] = 1
-		else:
-			st.session_state["num_correct"] = st.session_state["num_correct"] + 1
-	#else:
-	#	st.write(correct_choice, choice)
-	time1 = st.session_state["time_first"]
-	time2 = st.session_state["time_second"]
-	with open(filename, 'a+') as f:
-		f.write(f"{student_id},{correct_choice},{first_choice},{ai_pred},{second_choice},{time1},{time2},{time3}\n")
-	st.session_state["state_num"] = 1
-	st.session_state["student_num"] += 1
+
+	if attention_test:
+		if choice_2 == "DROPOUT": # paid attention
+			with open(filename, 'a+') as f:
+				f.write(f"{student_id},attention test completed\n")
+		else: # did not
+			st.session_state.attention_num += 1
+			with open(filename, 'a+') as f:
+				f.write(f"{student_id},attention test failed\n")
+		st.session_state["state_num"] = 1
+		st.session_state["student_num"] += 1
+
+	else:
+
+		if second_choice == correct_choice:
+			if not "num_correct" in st.session_state:
+				st.session_state["num_correct"] = 1
+			else:
+				st.session_state["num_correct"] = st.session_state["num_correct"] + 1
+		#else:
+		#	st.write(correct_choice, choice)
+		time1 = st.session_state["time_first"]
+		time2 = st.session_state["time_second"]
+		with open(filename, 'a+') as f:
+			f.write(f"{student_id},{correct_choice},{first_choice},{ai_pred},{second_choice},{time1},{time2},{time3}\n")
+		st.session_state["state_num"] = 1
+		st.session_state["student_num"] += 1
 
 # def explanation_cols_as_list(explanation_columns):
 # 	explanation_columns = explanation_columns.replace('[\'', '').replace('\']', '').replace(' \'', ' ').replace('\',', ',')
@@ -184,11 +198,14 @@ def final_decision_submit(student_number):
 
 ############################################################ MAIN ############################################################
 
+if state_num == -1:
+	switch_page("failure")
+
 ############################################################ text
 
 st.markdown("### Graduate or Dropout?")
 
-st.markdown(f'''Here you will be shown 10 sets of student information collected at a portuguese university. Your task is to predict for each student whether they will graduate or drop out.
+st.markdown(f'''Here you will be shown 12 sets of student information collected at a portuguese university. Your task is to predict for each student whether they will graduate or drop out.
 Below, you can see the student's file with various information about their person and academic career. You will be shown the prediction of our AI system to aid you in making your decision.
 
 
@@ -207,6 +224,12 @@ if st.session_state["student_num"] == len(student_order):
 	switch_page("Questionnaire")
 
 student_id = student_order[student_num]
+
+if student_id == st.session_state.student_id_tutorial:
+	attention_test = True 
+else:
+	attention_test = False 
+st.write(attention_test)
 
 #style = df.style.hide_index()
 #style.hide_columns()
@@ -314,6 +337,8 @@ if state_num == 2:
 
 		#st.write("Explanation:")
 		explanation = AI_predictions[str(student_id)]["text"]
+		if attention_test:
+			explanation = AI_predictions[str(student_id)]["text_att"]
 		st.write("Explanation   \n\n"+explanation)
 		#explanation_path = os.path.join(project_path, 'data/explanations_vis/'+str(student_id)+'.png')
 		#st.image(explanation_path)

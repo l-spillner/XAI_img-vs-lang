@@ -208,11 +208,13 @@ if st.session_state.tutorial_done == True:
 
 st.markdown("### Graduate or Dropout?")
 
-st.markdown(f'''Here you will be shown 10 sets of student information collected at a portuguese university. Your task is to predict for each student whether they will graduate or drop out.
+st.markdown(f'''Here you will be shown 12 sets of student information collected at a portuguese university. Your task is to predict for each student whether they will graduate or drop out.
 Below, you can see the student's file with various information about their person and academic career. You will be shown the prediction of our AI system to aid you in making your decision.
 
 
 ---''')
+
+st.warning("This first student is a kind of tutorial so that you can familiarize yourself with how the task will work. In addition to submitting your decision (graduate or dropout) for this student, you will have to solve two comprehension tests, to ensure that you have understood correctly what you should do. First, have a look at the student's data below:")
 
 
 ############################################################ display student data
@@ -282,24 +284,31 @@ with col2:
 
 		''')
 
+#st.write(state_num)
+
 # first comprehension test:
-if state_num < 2:
-	st.warning('''First, please solve this comprehension test. The purpose of this question is to ensure that you have understood how to read the student data and solve the given task.
-Please re-read the student data tables and the additional information (in blue) if you are unsure.''')
+if state_num == 1:
+	st.warning("""Now, please solve this comprehension test. The purpose of this question is to ensure that you have understood how to read the student data.   \nPlease re-read the student data tables and the additional information (in blue) if you are unsure.""")
+elif state_num > 1:
+	st.write("""Now, please solve this comprehension test. The purpose of this question is to ensure that you have understood how to read the student data.   \nPlease re-read the student data tables and the additional information (in blue) if you are unsure.""")
 comp_1 = st.radio('Based on the student data you have read above, what grade did the student achieve in their second semester?', ["", "very good", "sufficient", "poor", "good"], key = "comp1", disabled = (state_num != 1))
 if state_num == 1 and not comprehension:
 	st.write("Please rethink your answer. You have one more chance to answer correctly.")
 st.button("Submit", disabled = ((len(comp_1) == 0) or (state_num != 1)), key = "comp_1_submit", on_click = first_comprehension)
 
 # first shot:
+if state_num >= 2:
 
-st.write("""After making your initial decision, you will be able to see the AI suggestion and its explantion, and then submit your final choice.   
-	Only your final choice counts for your score.""")
+	if state_num == 2:
+		st.warning("""Next, please submit your initial prediction of whether this student will graduate or drop out.""")
+	else:
+		st.write("""Next, please submit your initial prediction of whether this student will graduate or drop out.""")
+	
+	st.write("""After making your initial decision, you will be able to see the AI suggestion and its explantion, and then submit your final choice.   
+		Only your final choice counts for your score.""")
 
-choice_1 = st.radio("What is your prediction for this student's academic career?", ["", "GRADUATE", "DROPOUT"], key = "decision_choice_1_"+ str(student_num), disabled = (state_num != 2))
-st.button("Enter decision and show AI analysis",disabled = ((len(choice_1) == 0) or (state_num != 2)), key="first_submit", on_click=first_decision_submit, args = (0,))
-
-st.write(state_num)
+	choice_1 = st.radio("What is your prediction for this student's academic career?", ["", "GRADUATE", "DROPOUT"], key = "decision_choice_1_"+ str(student_num), disabled = (state_num != 2))
+	st.button("Enter decision and show AI analysis",disabled = ((len(choice_1) == 0) or (state_num != 2)), key="first_submit", on_click=first_decision_submit, args = (0,))
 
 # AI
 
@@ -363,12 +372,15 @@ The explanation below details how the most important factors (those with an impa
 	#st.write("Explanation\: REASONS")
 
 	if state_num == 3:
-		st.warning('''Before you submit your final decision, please solve this second comprehension test.
-	Please re-read the student data tables, the additional information (in blue), as well as the explanation of the AI prediction if you are unsure.''')
+		st.warning('''Before you submit your final decision, please solve this second comprehension test.   \nPlease re-read the student data tables, the additional information (in blue), as well as the explanation of the AI prediction if you are unsure.''')
 	comp_2 = st.radio('Based on the student data and the AI analysis you have read above, did the gender of the student...', ["", "not have an influence on the predicted graduation probability", "have a positive impact on the predicted probability", "have a negative impact on the predicted probability"], key = "comp2", disabled = (state_num != 3))
 	if state_num == 3 and not comprehension:
 		st.write("Please rethink your answer. You have one more chance to answer correctly.")
 	st.button("Submit", disabled = ((len(comp_2) == 0) or (state_num != 3)), key = "comp_2_submit", on_click = second_comprehension)
+
+if state_num >= 4:
+
+	st.warning('''Now you can submit your final decision on wether this student will graduate or drop out, taking into account the AI analysis.   \nAfter you submit your choice, you will make decisions on 11 more students.''')
 
 	st.write("Please make your final choice here, taking into account the AI analysis.")
 	choice_2 = st.radio("What is your prediction for this student's academic career?", ["", "GRADUATE", "DROPOUT"], key = "decision_choice_2_"+ str(student_num), disabled = (state_num < 4))
