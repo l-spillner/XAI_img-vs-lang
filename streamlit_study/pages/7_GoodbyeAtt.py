@@ -81,7 +81,7 @@ st.write(f"You predicted {num_correct} of the 11 student outcomes correctly.")
 st.write("---")
 
 st.write('The completion code for Prolific is')
-st.write("# ATTENTION FAIL CODE")
+st.write("# CA6J0781")
 st.write('Please enter it on prolific to finish the study and receive your compensation.')
 
 #webbrowser.open('https://app.prolific.co/submissions/complete?cc=C13E0WG5')

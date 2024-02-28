@@ -20,7 +20,7 @@ import json
 import random
 import re
 from collections import Counter
-
+from PIL import Image
 import time
 
 ## TimeStamp
@@ -214,7 +214,7 @@ Below, you can see the student's file with various information about their perso
 
 ---''')
 
-st.warning("This first student is a kind of tutorial so that you can familiarize yourself with how the task will work. In addition to submitting your decision (graduate or dropout) for this student, you will have to solve two comprehension tests, to ensure that you have understood correctly what you should do. First, have a look at the student's data below:")
+st.warning("This first student is a kind of tutorial so that you can familiarize yourself with how the task will work. In addition to submitting your decision (graduate or dropout) for this student, you will have to solve two comprehension tests, to ensure that you have understood correctly what you should do. You will have two tries on each of these comprehension tests to get the answer right. First, have a look at the student's data below:")
 
 
 ############################################################ display student data
@@ -367,9 +367,13 @@ The explanation below details how the most important factors (those with an impa
 		#	st.success(explanation)
 
 	st.write("Explanation:")
-	explanation_path = os.path.join(project_path, 'data/explanations_vis/'+str(student_id)+'.png')
-	st.image(explanation_path)
-	#st.write("Explanation\: REASONS")
+	if st.session_state.group == 0:
+		explanation_path = os.path.join(project_path, 'data/explanations_vis/'+str(student_id)+'.png')
+		expImage = Image.open(explanation_path) 
+		st.image(expImage)
+	else:
+		explanation = AI_predictions[str(student_id)]["text"]
+		st.write("Explanation   \n\n"+explanation)
 
 	if state_num == 3:
 		st.warning('''Before you submit your final decision, please solve this second comprehension test.   \nPlease re-read the student data tables, the additional information (in blue), as well as the explanation of the AI prediction if you are unsure.''')

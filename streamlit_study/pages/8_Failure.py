@@ -73,10 +73,8 @@ except:
 	st.session_state.reroute_error = True
 	switch_page("Home")
 
-
-st.write("# FAILURE")
-
-st.balloons()
+st.write("# Please return your submission")
+st.write("Unfortunately you did not answer the comprehension test questions correctly and will thus not be able to participate in our study. Please go back to Prolific and return your submission.")
 
 footer="""<style>
 a:link , a:visited{
