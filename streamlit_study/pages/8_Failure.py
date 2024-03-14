@@ -73,8 +73,16 @@ except:
 	st.session_state.reroute_error = True
 	switch_page("Home")
 
+
+st.write("---")
 st.write("# Please return your submission")
-st.write("Unfortunately you did not answer the comprehension test questions correctly and will thus not be able to participate in our study. Please go back to Prolific and return your submission.")
+st.write("Thank you for your participation. Unfortunately you did not answer the comprehension test questions correctly and will thus not be able to participate in our study. Please go back to Prolific and return your submission.")
+
+st.write('The completion code for Prolific is')
+st.write("# C168PX16")
+
+
+st.balloons()
 
 footer="""<style>
 a:link , a:visited{
