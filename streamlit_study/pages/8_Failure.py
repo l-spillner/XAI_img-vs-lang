@@ -81,9 +81,6 @@ st.write("Thank you for your participation. Unfortunately you did not answer the
 st.write('The completion code for Prolific is')
 st.write("# C168PX16")
 
-
-st.balloons()
-
 footer="""<style>
 a:link , a:visited{
 color: blue;
