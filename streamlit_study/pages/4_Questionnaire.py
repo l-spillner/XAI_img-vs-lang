@@ -195,6 +195,9 @@ if submit_button:
                 if(key == "att_1"):
                     if(likert_results[key] != "AGREE"):
                         st.session_state.attention_num = st.session_state.attention_num + 1
+                        f.write(f"{key},attention test failed\n")
+                    else:
+                        f.write(f"{key},attention test completed\n")
                 else:
                     f.write(f"{key},{likert_results[key]}\n")
         if(st.session_state.attention_num >= 2):
