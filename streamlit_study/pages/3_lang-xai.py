@@ -120,11 +120,11 @@ def final_decision_submit(student_number):
 	if attention_test:
 		if choice_2 == "DROPOUT": # paid attention
 			with open(filename, 'a+') as f:
-				f.write(f"{student_id},attention test completed\n")
+				f.write(f"attention_{student_id},attention test completed\n")
 		else: # did not
 			st.session_state.attention_num += 1
 			with open(filename, 'a+') as f:
-				f.write(f"{student_id},attention test failed\n")
+				f.write(f"attention_{student_id},attention test failed\n")
 		st.session_state["state_num"] = 1
 		st.session_state["student_num"] += 1
 
