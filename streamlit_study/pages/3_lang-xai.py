@@ -229,7 +229,7 @@ if student_id == st.session_state.student_id_tutorial:
 	attention_test = True 
 else:
 	attention_test = False 
-st.write(attention_test)
+#st.write(attention_test)
 
 #style = df.style.hide_index()
 #style.hide_columns()

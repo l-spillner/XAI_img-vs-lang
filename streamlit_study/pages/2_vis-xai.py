@@ -196,7 +196,7 @@ def final_decision_submit(student_number):
 
 ############################################################ MAIN ############################################################
 
-st.write(state_num)
+#st.write(state_num)
 
 if state_num == -1:
 	switch_page("failure")
@@ -229,7 +229,7 @@ if student_id == st.session_state.student_id_tutorial:
 	attention_test = True 
 else:
 	attention_test = False 
-st.write(attention_test)
+#st.write(attention_test)
 
 #style = df.style.hide_index()
 #style.hide_columns()
